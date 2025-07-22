@@ -1,23 +1,28 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { threeAndFive } from './math'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [formValue, setFormValue] = useState('')
+  const [displayAnswer, setDisplayAnswer] = useState(null)
+
+  const findResult = (e) => {
+    e.preventDefault()
+    // console.log(threeAndFive(formValue))
+    setDisplayAnswer(threeAndFive(formValue))
+  }
 
   return (
     <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Enter a value and we'll tell you the sum of all the multiples of 3 & 5 within it.</h1>
+      <form onSubmit={findResult}>
+        <input type="text" placeholder='Upper value' value={formValue} onChange={(e) => setFormValue(e.target.value)} />
+        <input type="submit" />
+      </form>
+
+      {displayAnswer !== null && <h3>
+        The answer is: {displayAnswer}
+        </h3>}
     </>
   )
 }
